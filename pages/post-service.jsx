@@ -189,7 +189,7 @@ const PostService = ({ user }) => {
                     authorization: `Bearer ${user?.token}`,
                 },
             })
-            if (res && res.status === 200) {
+            if (res && res.status === 201) {
                 setState({ success: true, processing: false, error: { show: false, message: '' } })
                 router.push('/')
             } else {
@@ -246,12 +246,12 @@ const PostService = ({ user }) => {
                             :
                             ''
                         }
-                        {errorState.differentVal ?
+                        {errorState.differentVal && !verified ?
                             <p className="text-red-500 font-semibold">Verification failed, meta tag did not match with above meta tag, please copy and paste exact value. </p>
                             :
                             ''
                         }
-                        {errorState.metaNotFound ?
+                        {errorState.metaNotFound && !verified ?
                             <p className="text-red-500 font-semibold">Verification failed, Meta tag was not added. Please add above meta tag and try again. </p>
                             :
                             ''
@@ -340,7 +340,7 @@ const PostService = ({ user }) => {
                             </>
                         }
                         <div className='relative grid py-3 gap-4 grid-cols-1 md:grid-cols-2 w-full'>
-                            <div className={`${state.processing ? "opacity-0 -z-10" : 'cursor-not-allowed opacity-70 z-20'} bg-white w-full absolute inset-0`}></div>
+                            <div className={`${!state.processing ? "opacity-0 -z-10" : 'cursor-not-allowed opacity-70 z-20'} bg-white w-full absolute inset-0`}></div>
                             <button>
                                 <Button fluid text='Create Post' />
                             </button>
