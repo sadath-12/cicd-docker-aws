@@ -10,7 +10,6 @@ const dashboard = ({ user, id }) => {
     const [websites, setWebsites] = useState([])
     const [websiteOwner, setWebsiteOwner] = useState({})
     var options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
-
     const getData = async (id) => {
         const res = await axios.get(`/api/user/getUser?id=${id}&&websites=true`);
         const websiteData = res.data.websites || []
@@ -35,7 +34,7 @@ const dashboard = ({ user, id }) => {
                                 <div className='relative mx-auto aspect-square max-w-[10rem] w-full h-full'>
                                     <Image src='/images/user_default.png' alt='user_pic' fill />
                                 </div>
-                                <h3 className="text-xl text-center lg:text-2xl font-semibold">aman_pandey</h3>
+                                <h3 className="text-xl text-center lg:text-2xl font-semibold">{websiteOwner?.username}</h3>
                                 <Divider />
                                 <div className="flex flex-col gap-4">
 
@@ -45,7 +44,7 @@ const dashboard = ({ user, id }) => {
                                         </span>
 
                                         <span className='truncate'>
-                                            amanpandey@gmail.com
+                                            {websiteOwner?.email}
                                         </span>
                                     </div>
                                     <div className="flex items-center justify-between">
@@ -53,7 +52,7 @@ const dashboard = ({ user, id }) => {
                                             Country
                                         </span>
                                         <span className='truncate'>
-                                            India
+                                            {websiteOwner?.country}
                                         </span>
                                     </div>
                                     <div className="flex items-center justify-between">
@@ -61,7 +60,7 @@ const dashboard = ({ user, id }) => {
                                             Joined On
                                         </span>
                                         <span className='truncate'>
-                                            Fri, December 2, 2022
+                                            {(new Date(websiteOwner?.createdAt).toLocaleDateString("en-US", options))}
                                         </span>
                                     </div>
                                     <div className="py-2"></div>
@@ -70,7 +69,7 @@ const dashboard = ({ user, id }) => {
                         </div>
                         <div className="col-span-6 md:col-span-3 lg:col-span-4 flex flex-col gap-6">
                             <div className="flex px-5 py-2 items-center justify-between bg-white shadow-theme">
-                                <h3 className='text-xl lg:text-2xl font-semibold'>Aman's Websites</h3>
+                                <h3 className='text-xl lg:text-2xl font-semibold'>{websiteOwner?.username}'s Websites</h3>
                                 <PostWebsiteBtn />
                             </div>
                             <div className="p-3 grid grid-cols-1 lg:grid-cols-2 gap-6 shadow-theme">
