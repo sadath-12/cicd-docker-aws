@@ -33,8 +33,10 @@ const Home = ({ user }) => {
   }, [])
   return (
     <Layout user={user}>
-      <Meta title='Home Page' />
-      <Hero />
+      <Meta
+        title='Home Page'
+      />
+      <Hero user={user} />
       <section id="posts" className='py-12 container lg:py-16 flex flex-col gap-8'>
         <div className="flex flex-col gap-2 text-center items-center">
           <h2 className="text-2xl lg:text-3xl font-semibold">Popular Posts</h2>

@@ -4,13 +4,21 @@ import SocialIcons from '../common/SocialIcons'
 import Logo from '../common/Logo'
 import Link from 'next/link'
 
-const Footer = () => {
+const Footer = ({ user }) => {
     return (
         <footer className='bg-[#292930] z-30 text-center md:text-start text-white border-t py-12'>
 
             <div className="flex flex-col md:flex-row gap-6 !max-w-[90rem] container justify-between items-center py-8">
-                <h2 className="text-2xl lg:text-4xl font-semibold max-w-[40rem]">Register to List & <span className='leading-normal'>Grow Your</span> Amazing Website <span className='leading-normal'>using</span> Posts.Site.</h2>
-                <Button text='Post Your Website now!' yellow />
+                <h2 className="text-2xl lg:text-4xl font-semibold max-w-[40rem]">{user && user.token ? '' : 'Register to'} List & <span className='leading-normal'>Grow Your</span> Amazing Website <span className='leading-normal'>using</span> Posts.Site.</h2>
+                {user && user.token ?
+                    <Link href={'/post-service'}>
+                        <Button text='Post Your Website now!' yellow />
+                    </Link>
+                    :
+                    <Link href={'/login'}>
+                        <Button text='Post Your Website now!' yellow />
+                    </Link>
+                }
             </div>
             <div className="flex flex-col md:flex-row gap-6 justify-between !max-w-[90rem] border-[#3b3b44] container border-t items-center py-8">
                 <p className='text-lg font-medium'>Copyright &copy; 2022 Posts.site | All rights reserved.</p>

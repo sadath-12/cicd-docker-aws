@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
-import { Alert, CircularProgress } from '@mui/material'
+import { Alert, LinearProgress } from '@mui/material'
 import { countriesHelper } from '../components/dummy'
 import Meta from '../components/_App/Meta'
 const Button = dynamic(() => import('../components/common/Button'), { ssr: false })
@@ -142,10 +142,12 @@ const register = ({ user }) => {
 
                     </div>
                     <div className="flex relative overflow-hidden bg-white max-w-[30rem] justify-center lg:max-w-full flex-col gap-6 py-12 px-4 lg:px-10 2xl:px-20 mx-auto w-full">
-                        <div className={`${state.processing ? 'flex' : '!bg-transparent hidden'} z-10 top-0 w-full h-full transition-all duration-500 absolute flex items-center justify-center`} style={{ background: 'linear-gradient(rgba(255,255,255,.6),rgba(255,255,255,0.6))' }}>
 
-                        </div>
-
+                        {state.processing &&
+                            <div className="absolute w-full h-full inset-0 bg-white opacity-70 z-20">
+                                <LinearProgress />
+                            </div>
+                        }
                         <div className="flex flex-col gap-2">
                             <h1 className="text-2xl lg:text-4xl text-themeColor font-semibold">Lets get started!</h1>
                         </div>
@@ -227,7 +229,7 @@ const register = ({ user }) => {
                 <div className={`${otpState.sent && !otpState.verified ? 'top-[0%]' : 'top-[-100%]'} z-50 w-full h-screen transition-all duration-500 fixed flex items-center justify-center`} style={{ background: 'linear-gradient(rgba(255,255,255,.6),rgba(255,255,255,0.6))' }}>
                     <div className="w-full max-w-xl flex flex-col gap-4 p-10 bg-white shadow-theme relative z-20">
                         <h2 className='text-2xl lg:text-3xl font-semibold'>Enter OTP</h2>
-                        <p>OTP sent to +{data.mobile.slice(0, 2)}xxxxxx{data.mobile.slice(8, 12)}</p>
+                        <p>OTP sent to +{data?.mobile?.slice(0, 2)}xxxxxx{data?.mobile?.slice(8, 12)}</p>
                         <form className='flex flex-col gap-6'>
                             <div className="flex flex-col gap-2">
                                 <label htmlFor="otp">
@@ -237,7 +239,7 @@ const register = ({ user }) => {
                                     onChange={(e) => setOtpState({ ...otpState, otp: e.target.value })} value={otpState.otp} type="number" name="otp" id="otp" placeholder='Enter OTP.' className='input' required />
                             </div>
                             {resent.did && data.attempts < 2 &&
-                                <Alert severity="success">OTP sent to +{data.mobile.slice(0, 2)}xxxxxx{data.mobile.slice(8, 12)}!</Alert>
+                                <Alert severity="success">OTP sent to +{data?.mobile?.slice(0, 2)}xxxxxx{data?.mobile?.slice(8, 12)}!</Alert>
                             }
                             <div className="flex justify-between items-center">
                                 <p>Didn't Recieve a code?</p>

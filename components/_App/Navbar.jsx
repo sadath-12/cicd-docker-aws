@@ -9,6 +9,7 @@ import { Router, useRouter } from 'next/router'
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import { CgProfile } from 'react-icons/cg';
+import { HiOutlineMail } from 'react-icons/hi';
 import { BiAddToQueue } from 'react-icons/bi';
 import { MdLogout } from 'react-icons/md';
 import Menu from '@mui/material/Menu';
@@ -130,9 +131,15 @@ const Navbar = ({ user }) => {
                                 </li>
                             </ul>
                         </nav>
+
                         <div className="md:flex items-center gap-4 hidden">
                             {user && user?.email && user?.token ?
                                 <>
+                                    <Link href={`/profile/chat`} legacyBehavior>
+                                        <a className='w-[50px] flex items-center justify-center hover:bg-themeColor cursor-pointer hover:text-white text-xl h-[50px] border rounded-md shadow-theme bg-white'>
+                                            <HiOutlineMail />
+                                        </a>
+                                    </Link>
                                     <PostWebsiteBtn />
                                     <Box sx={{ flexGrow: 0 }}>
                                         <Tooltip title="Open settings">
@@ -184,6 +191,13 @@ const Navbar = ({ user }) => {
                                             <MenuItem >
                                                 <Link href='/profile/dashboard' legacyBehavior>
                                                     <a className='flex items-center gap-3'><CgProfile className='text-xl' /> <span>{'Profile'}</span></a>
+                                                </Link>
+                                            </MenuItem>
+                                            <Divider />
+                                            <MenuItem >
+
+                                                <Link href='/profile/chat' legacyBehavior>
+                                                    <a className='flex items-center gap-3'><HiOutlineMail className='text-xl' /> <span>{'My Inbox'}</span></a>
                                                 </Link>
                                             </MenuItem>
                                             <Divider />

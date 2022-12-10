@@ -32,6 +32,7 @@ const PostService = ({ user }) => {
     const [state, setState] = useState({ processing: false, error: { show: false, message: '' }, success: false })
     const [metaTag, setMetaTag] = useState('')
     const [image, setImage] = useState('')
+    const [verificationPending, setVerificationPending] = useState(false)
     const [randVal, setRandVal] = useState('')
     const [verified, setVerified] = useState(false)
     const [data, setData] = useState(initial)
@@ -98,6 +99,7 @@ const PostService = ({ user }) => {
         }
     }
     const verifySiteByHead = async (e) => {
+        setVerificationPending(true)
         fetch(`https://api.codetabs.com/v1/proxy?quest=${siteURL}`)
             .then(res => res.text())
             .then(text => {
@@ -108,12 +110,13 @@ const PostService = ({ user }) => {
                     console.log(randVal, 'rand')
                     if (doc.querySelector("meta[name='paypost-site-verification']").getAttribute("content") === randVal) {
                         setVerified(true)
-
                     } else {
                         setErrorState({ ...errorState, differentVal: true, metaNotFound: false })
+                        setVerificationPending(false)
                     }
                 } else {
                     setErrorState({ ...errorState, metaNotFound: true, differentVal: false })
+                    setVerificationPending(false)
                 }
 
             })
@@ -236,7 +239,7 @@ const PostService = ({ user }) => {
                                 <MdOutlineContentCopy />
                             </div>
                         </div>
-                        {verified &&
+                        {verificationPending &&
                             <div className="absolute w-full h-full inset-0 bg-white opacity-70 z-20">
                                 <LinearProgress />
                             </div>

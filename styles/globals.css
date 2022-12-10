@@ -90,6 +90,22 @@ input[type=number]::-webkit-outer-spin-button {
     animation: sh7 1.5s infinite cubic-bezier(0.3, 1, 0, 1);
 }
 
+.chat_height {
+    height: calc(100vh - 130px);
+}
+
+.chat_height::-webkit-scrollbar {
+    width: 2px;
+    background: white;
+    padding: 0 1px;
+}
+
+.chat_height::-webkit-scrollbar-thumb {
+    background: #efefef;
+}
+
+
+
 @keyframes sh7 {
     33% {
         inset: -10px;
