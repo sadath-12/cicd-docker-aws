@@ -10,7 +10,7 @@ import { useRecoilState } from 'recoil'
 import { relatedState, sellerState } from '../../../../utils/atoms'
 import { useRouter } from 'next/router'
 
-const index = ({ id, user }) => {
+const Id = ({ id, user }) => {
     const [conversations, setConversations] = useState([])
     const [selected, setSelected] = useState({})
     const [active, setActive] = useState([])
@@ -92,13 +92,14 @@ const index = ({ id, user }) => {
         </Layout>
     )
 }
+
 export async function getServerSideProps({ params }) {
     const { id } = params
 
     return {
         props: {
-            id: id
+            id
         },
     }
 }
-export default index
+export default Id

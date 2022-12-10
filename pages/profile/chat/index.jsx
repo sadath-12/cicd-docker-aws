@@ -10,7 +10,7 @@ import { useRecoilState } from 'recoil'
 import { relatedState, sellerState } from '../../../utils/atoms'
 import { useRouter } from 'next/router'
 
-const index = ({ user }) => {
+const Index = ({ user }) => {
     const [conversations, setConversations] = useState([])
     const [selected, setSelected] = useState({})
     const [chats, setChats] = useState([])
@@ -58,4 +58,4 @@ const index = ({ user }) => {
     )
 }
 
-export default index
+export default Index

@@ -202,6 +202,7 @@ const Details = ({ website }) => {
         </div>
     )
 }
+
 export async function getServerSideProps({ params }) {
     const { id } = params
     return {
