@@ -52,7 +52,7 @@ const Main = ({ selected, active, setActive, setChats, user, chats }) => {
     }
 
     useEffect(() => {
-        if (initialized) {
+        if (initialized && selected?._id) {
             const userData = selected?.user?._id === user._id ? selected?.user : selected?.seller
             socket.current.emit('addUsers', userData)
             socket.current.on('getUsers', users => {
@@ -69,7 +69,7 @@ const Main = ({ selected, active, setActive, setChats, user, chats }) => {
     }, [active])
 
     useEffect(() => {
-        initialized && socket.current.on('getMessage', data => {
+        initialized && selected?._id && socket.current.on('getMessage', data => {
             setIncomingMsg({
                 ...data, createdAt: new Date()
             })
@@ -77,7 +77,7 @@ const Main = ({ selected, active, setActive, setChats, user, chats }) => {
     }, [initialized])
 
     useEffect(() => {
-        incomingMsg && selected && selected._id === incomingMsg.convoId && setChats(prev => [...prev, incomingMsg])
+        incomingMsg && selected && selected?._id === incomingMsg.convoId && setChats(prev => [...prev, incomingMsg])
 
     }, [incomingMsg, selected])
     useEffect(() => {
