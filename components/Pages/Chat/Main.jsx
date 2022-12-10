@@ -52,7 +52,7 @@ const Main = ({ selected, active, setActive, setChats, user, chats }) => {
     }
 
     useEffect(() => {
-        if (initialized && selected?._id) {
+        if (initialized) {
             const userData = selected?.user?._id === user._id ? selected?.user : selected?.seller
             socket.current.emit('addUsers', userData)
             socket.current.on('getUsers', users => {
@@ -69,7 +69,7 @@ const Main = ({ selected, active, setActive, setChats, user, chats }) => {
     }, [active])
 
     useEffect(() => {
-        initialized && selected?._id && socket.current.on('getMessage', data => {
+        initialized && socket.current.on('getMessage', data => {
             setIncomingMsg({
                 ...data, createdAt: new Date()
             })
@@ -77,12 +77,13 @@ const Main = ({ selected, active, setActive, setChats, user, chats }) => {
     }, [initialized])
 
     useEffect(() => {
-        incomingMsg && selected && selected?._id === incomingMsg.convoId && setChats(prev => [...prev, incomingMsg])
+        incomingMsg && selected._id === incomingMsg.convoId && setChats(prev => [...prev, incomingMsg])
 
     }, [incomingMsg, selected])
     useEffect(() => {
         setAcc(selected?.user?._id === user._id ? selected?.seller : selected?.user)
     }, [selected])
+
     return (
         <div className='flex flex-col h-full'>
             <div className="w-full items-center flex justify-between md:justify-start border-b bg-white z-20 shadow-sm sticky inset-0 px-2 md:px-[18px] py-[7px]">

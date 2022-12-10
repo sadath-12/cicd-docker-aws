@@ -9,7 +9,6 @@ export default function SocketHandler(req, res) {
     }
     const io = new Server(res.socket.server);
     res.socket.server.io = io;
-
     let users = []
     const addUser = (userData, socketId) => {
         !users.some(user => user._id === userData?._id) && users.push({ ...userData, socketId })
