@@ -158,7 +158,7 @@ const Message = ({ incoming, chats, msg, idx, senderId, time }) => {
     return (
         <div className="flex flex-col gap-4">
             {new Date(chats[idx - 1]?.createdAt).getDate() != new Date(time).getDate() &&
-                <div className="w-fit mx-auto py-1 px-3 rounded-md bg-gray-200 text-sm" >{new Date(time).toLocaleDateString("en-US")}</div>
+                <div className="w-fit mx-auto py-1 px-3 rounded-md bg-gray-200 text-sm" >{new Date(time).toLocaleDateString("en-IN")}</div>
             }
             <div className={`flex whitespace-wrap text-sm items-end relative  gap-1 py-2.5  p-3 rounded-md   ${incoming ? 'bg-gray-200 text-black opacity-90 mr-auto' : 'bg-themeColor  text-white ml-auto'}`}>
                 {msg}
