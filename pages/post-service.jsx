@@ -36,7 +36,7 @@ const PostService = ({ user }) => {
     const [randVal, setRandVal] = useState('')
     const [verified, setVerified] = useState(false)
     const [data, setData] = useState(initial)
-    const [errorState, setErrorState] = useState({ url: false, metaNotFound: false, differentVal: false })
+    const [errorState, setErrorState] = useState({ url: false, urlMessage: '', metaNotFound: false, differentVal: false })
     const [open, setOpen] = useState(false);
 
     const router = useRouter()
@@ -92,14 +92,21 @@ const PostService = ({ user }) => {
 
     const verifyByPayPost = async (e) => {
         e.preventDefault()
-        if (validURL(siteURL)) {
-            await generateRandomMeta()
+        const res = await axios.get('/api/websites/webExist?siteURL=' + siteURL)
+        if (res && res.status === 200 && res.data.message === 'site not exists') {
+            setErrorState({ ...errorState, urlMessage: '' })
+            if (validURL(siteURL)) {
+                await generateRandomMeta()
+            } else {
+                setErrorState({ ...errorState, url: true })
+            }
         } else {
-            setErrorState({ ...errorState, url: true })
+            setErrorState({ ...errorState, url: true, urlMessage: 'Website already exist, please add another site.' })
         }
     }
     const verifySiteByHead = async (e) => {
         setVerificationPending(true)
+
         fetch(`https://api.codetabs.com/v1/proxy?quest=${siteURL}`)
             .then(res => res.text())
             .then(text => {
@@ -121,6 +128,8 @@ const PostService = ({ user }) => {
 
             })
             .catch(err => alert('Something went wrong, please try again later.'));
+
+
     }
     const getSiteStats = async () => {
         const response = await axios.get(`/api/websites/get_stats?url=${siteURL}`)
@@ -217,7 +226,10 @@ const PostService = ({ user }) => {
                         <label htmlFor="siteURL">Website URL*</label>
                         <input readOnly={verified} onChange={(e) => setSiteURL(e.target.value)} required type="url" id="siteURL" className="input" placeholder='https://www.example.com' />
                         {errorState.url ?
-                            <p className="text-red-500 font-semibold">Please enter a valid URL</p>
+                            errorState.urlMessage.length > 0 ?
+                                <p className="text-red-500 font-semibold">{errorState.urlMessage}</p>
+                                :
+                                <p className="text-red-500 font-semibold">Please enter a valid URL</p>
                             :
                             ''
                         }
@@ -360,67 +372,105 @@ const PostService = ({ user }) => {
 const Details = ({ site_stats }) => {
     return (
         <div className='flex flex-col gap-6'>
+
             <div className="grid grid-cols-2 md:grid-cols-3  2xl:grid-cols-3 gap-6">
                 <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">
-                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.da || 'N/A'}</h3>
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.da === 'notfound' ? 'N/A' : site_stats?.da || 'N/A'}</h3>
                     <Button text='Site Page Authority' fluid notBtn />
                 </div>
                 <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">
-                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.pa || 'N/A'}</h3>
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.pa === 'notfound' ? 'N/A' : site_stats?.pa || 'N/A'}</h3>
                     <Button text='Site Domain Authority' fluid notBtn />
                 </div>
                 <div className="flex border bg-white  flex-col gap-2 p-2 rounded-xl">
-                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.mozrank || 'N/A'}</h3>
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.mozrank === 'notfound' ? 'N/A' : site_stats?.mozrank || 'N/A'}</h3>
                     <Button text='Site Moz Rank' fluid notBtn />
                 </div>
                 <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">
-                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.fb_shares || 'N/A'}</h3>
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.fb_shares === 'notfound' ? 'N/A' : site_stats?.fb_shares || 'N/A'}</h3>
                     <Button text='Fb Shares' fluid notBtn />
                 </div>
                 <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">
-                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.fb_reac || 'N/A'}</h3>
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.fb_reac === 'notfound' ? 'N/A' : site_stats?.fb_reac || 'N/A'}</h3>
                     <Button text='Fb Reactions' fluid notBtn />
                 </div>
                 <div className="flex border bg-white  flex-col gap-2 p-2 rounded-xl">
-                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.fb_comments || 'N/A'}</h3>
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.fb_comments === 'notfound' ? 'N/A' : site_stats?.fb_comments || 'N/A'}</h3>
                     <Button text='Fb Comments' fluid notBtn />
                 </div>
                 <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">
-                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.links || 'N/A'}</h3>
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.links === 'notfound' ? 'N/A' : site_stats?.links || 'N/A'}</h3>
                     <Button text='Links In' fluid notBtn />
                 </div>
                 <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">
-                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.equity || 'N/A'}</h3>
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.equity === 'notfound' ? 'N/A' : site_stats?.equity || 'N/A'}</h3>
                     <Button text='Equity' fluid notBtn />
                 </div>
                 <div className="flex border bg-white  flex-col gap-2 p-2 rounded-xl">
-                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.sr_hlinks || 'N/A'}</h3>
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.sr_hlinks === 'notfound' ? 'N/A' : site_stats?.sr_hlinks || 'N/A'}</h3>
                     <Button text='Semrush hostname Links' fluid notBtn />
                 </div>
                 <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">
-                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.sr_costs || 'N/A'}</h3>
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.sr_costs === 'notfound' ? 'N/A' : site_stats?.sr_costs || 'N/A'}</h3>
                     <Button text='Semrush Costs' fluid notBtn />
                 </div>
                 <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">
-                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.sr_dlinks || 'N/A'}</h3>
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.sr_dlinks === 'notfound' ? 'N/A' : site_stats?.sr_dlinks || 'N/A'}</h3>
                     <Button text='Semrush Domain Links' fluid notBtn />
                 </div>
                 <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">
-                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.sr_kwords || 'N/A'}</h3>
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.sr_kwords === 'notfound' ? 'N/A' : site_stats?.sr_kwords || 'N/A'}</h3>
                     <Button text='Semrush Keywords Number' fluid notBtn />
                 </div>
 
                 <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">
-                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.sr_rank || 'N/A'}</h3>
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.sr_rank === 'notfound' ? 'N/A' : site_stats?.sr_rank || 'N/A'}</h3>
                     <Button text='Semrush Rank' fluid notBtn />
                 </div>
                 <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">
-                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.sr_traffic || 'N/A'}</h3>
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.sr_traffic === 'notfound' ? 'N/A' : site_stats?.sr_traffic || 'N/A'}</h3>
                     <Button text='Semrush Traffic' fluid notBtn />
                 </div>
                 <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">
-                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.sr_ulinks || 'N/A'}</h3>
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.sr_ulinks === 'notfound' ? 'N/A' : site_stats?.sr_ulinks || 'N/A'}</h3>
                     <Button text='Semrush URL Links' fluid notBtn />
+                </div>
+                {/* {majestic} */}
+                <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.majesticCF === 'notfound' ? 'N/A' : site_stats?.majesticCF || 'N/A'}</h3>
+                    <Button text='Majestic CF' fluid notBtn />
+                </div>
+                <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.majesticIPs === 'notfound' ? 'N/A' : site_stats?.majesticIPs || 'N/A'}</h3>
+                    <Button text='Majestic IPs' fluid notBtn />
+                </div>
+                <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.majesticLinks === 'notfound' ? 'N/A' : site_stats?.majesticLinks || 'N/A'}</h3>
+                    <Button text='majestic Links' fluid notBtn />
+                </div>
+                <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.majesticRefDomains === 'notfound' ? 'N/A' : site_stats?.majesticRefDomains || 'N/A'}</h3>
+                    <Button text='majesticRefDomains' fluid notBtn />
+                </div>
+                <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.majesticRefEDU === 'notfound' ? 'N/A' : site_stats?.majesticRefEDU || 'N/A'}</h3>
+                    <Button text='majesticRefEDU' fluid notBtn />
+                </div>
+                <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.majesticRefGov === 'notfound' ? 'N/A' : site_stats?.majesticRefGov || 'N/A'}</h3>
+                    <Button text='SmajesticRefGov' fluid notBtn />
+                </div>
+                <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.majesticRefSubnets === 'notfound' ? 'N/A' : site_stats?.majesticRefSubnets || 'N/A'}</h3>
+                    <Button text='majesticRefSubnets' fluid notBtn />
+                </div>
+                <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.majesticTTF0Name === 'notfound' ? 'N/A' : site_stats?.majesticTTF0Name || 'N/A'}</h3>
+                    <Button text='majesticTTF0Name' fluid notBtn />
+                </div>
+                <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">
+                    <h3 className="text-2xl text-center lg:text-4xl font-bold">{site_stats?.majesticTF === 'notfound' ? 'N/A' : site_stats?.majesticTF || 'N/A'}</h3>
+                    <Button text='majesticTF' fluid notBtn />
                 </div>
             </div>
         </div>
