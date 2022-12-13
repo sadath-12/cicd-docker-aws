@@ -68,6 +68,8 @@ const Main = ({ selected, active, setActive, setChats, user, chats }) => {
         console.log(active)
     }, [active])
 
+
+
     useEffect(() => {
         initialized && socket.current.on('getMessage', data => {
             setIncomingMsg({
@@ -78,7 +80,7 @@ const Main = ({ selected, active, setActive, setChats, user, chats }) => {
 
     useEffect(() => {
         incomingMsg && selected._id === incomingMsg.convoId && setChats(prev => [...prev, incomingMsg])
-
+        console.log(incomingMsg)
     }, [incomingMsg, selected])
     useEffect(() => {
         setAcc(selected?.user?._id === user._id ? selected?.seller : selected?.user)
@@ -86,7 +88,7 @@ const Main = ({ selected, active, setActive, setChats, user, chats }) => {
 
     return (
         <div className='flex flex-col h-full'>
-            <div className="w-full items-center flex justify-between md:justify-start border-b bg-white z-20 shadow-sm sticky inset-0 px-2 md:px-[18px] py-[7px]">
+            <div className="w-full items-center flex justify-start border-b bg-white z-20 shadow-sm sticky inset-0 px-2 md:px-[18px] py-[7px]">
                 <div className="flex md:hidden">
                     <Link href={`/profile/chat`}>
                         <IconButton>
@@ -101,7 +103,7 @@ const Main = ({ selected, active, setActive, setChats, user, chats }) => {
                     <div className="flex flex-col gap-1">
                         <h2 className="text-xl text-center font-semibold">{selected?.seller?._id === user?._id ? selected?.user?.username : selected?.seller?.username}</h2>
                         <small>
-                            {active?.find(user => user._id === acc?._id) ? 'Online' : 'Offline'}
+                            {active?.find(user => user._id === acc?._id) ? <p className='text-green-500 font-semibold'>Online</p> : <p className='text-red-500 font-semibold'>Offline</p>}
                             <div></div>
                         </small>
                     </div>
@@ -116,7 +118,7 @@ const Main = ({ selected, active, setActive, setChats, user, chats }) => {
                     <div className="border-t w-full"></div>
                 </div>
                 {chats.map((item, index) => (
-                    <Message senderId={item.senderId} chats={chats} key={index} incoming={item.senderId != user._id} msg={item.message} time={item.createdAt} />
+                    <Message senderId={item.senderId} chats={chats} idx={index} key={index} incoming={item.senderId != user._id} msg={item.message} time={item.createdAt} />
                 ))}
                 <div ref={messagesEndRef} ></div>
             </div>
@@ -141,7 +143,7 @@ const Main = ({ selected, active, setActive, setChats, user, chats }) => {
     )
 }
 
-const Message = ({ incoming, chats, msg, senderId, time }) => {
+const Message = ({ incoming, chats, msg, idx, senderId, time }) => {
     function formatAMPM(date) {
         var hours = date.getHours();
         var minutes = date.getMinutes();
@@ -152,9 +154,10 @@ const Message = ({ incoming, chats, msg, senderId, time }) => {
         var strTime = hours + ':' + minutes + ' ' + ampm;
         return strTime;
     }
+
     return (
         <div className="flex flex-col gap-4">
-            {new Date(chats[chats.length - 1].createdAt).getDate() != new Date(time).getDate() &&
+            {new Date(chats[idx - 1]?.createdAt).getDate() != new Date(time).getDate() &&
                 <div className="w-fit mx-auto py-1 px-3 rounded-md bg-gray-200 text-sm" >{new Date(time).toLocaleDateString("en-US")}</div>
             }
             <div className={`flex whitespace-wrap text-sm items-end relative  gap-1 py-2.5  p-3 rounded-md   ${incoming ? 'bg-gray-200 text-black opacity-90 mr-auto' : 'bg-themeColor  text-white ml-auto'}`}>

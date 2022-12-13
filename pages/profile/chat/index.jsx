@@ -13,13 +13,12 @@ import { useRouter } from 'next/router'
 const Index = ({ user }) => {
     const [conversations, setConversations] = useState([])
     const [selected, setSelected] = useState({})
-    const [chats, setChats] = useState([])
-    const [sellerSelected, setSellerSelected] = useRecoilState(sellerState)
-    const [relatedToWebsite, setRelatedToWebsite] = useRecoilState(relatedState)
+    const [loading, setLoading] = useState(false)
     const router = useRouter()
 
     useEffect(() => {
         (async () => {
+            setLoading(true)
             const conversations = await axios.get('/api/chat/conversation',
                 {
                     headers: {
@@ -28,6 +27,7 @@ const Index = ({ user }) => {
                 }
             );
             setConversations(conversations.data.convos)
+            setLoading(false)
         })()
     }, [])
     return (
