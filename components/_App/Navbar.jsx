@@ -103,7 +103,7 @@ const Navbar = ({ user }) => {
                 </nav>
             </div>
             <div className={`sticky inset-0 bg-white ${open ? 'shadow-none' : 'shadow-theme'} z-50 `}>
-                <header className='py-3 container relative !max-w-[90rem] flex items-center justify-between'>
+                <header className='py-3 !max-w-[100rem] container relative flex items-center justify-between'>
                     <Logo />
                     <div className="flex gap-4">
                         <nav className='hidden md:flex items-center'>
