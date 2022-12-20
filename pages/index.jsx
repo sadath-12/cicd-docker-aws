@@ -130,7 +130,7 @@ const Home = ({ user }) => {
             <h2 className="text-2xl lg:text-3xl font-semibold">Popular Posts</h2>
             <Button onClick={toggleDrawer(true)}>Filter</Button>
           </div>
-          {posts?.length > 0 || loading ?
+          {posts?.length > 0 || !loading ?
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {posts?.map(item => (
                 <PostCard data={item} key={item._id} />
