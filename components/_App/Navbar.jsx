@@ -229,7 +229,14 @@ const Navbar = ({ user }) => {
                                 </>
                             }
                         </div>
-                        <div onClick={() => setOpen(!open)} className="w-14 flex md:hidden items-center justify-center hover:bg-themeColor cursor-pointer hover:text-white text-2xl h-14 rounded-md shadow-theme bg-white">
+                        {user && user?.email && user?.token &&
+                            <Link href={`/profile/chat`} legacyBehavior>
+                                <a className='w-[50px] flex items-center justify-center hover:bg-themeColor cursor-pointer hover:text-white text-xl h-[50px] border rounded-md shadow-theme bg-white'>
+                                    <HiOutlineMail />
+                                </a>
+                            </Link>
+                        }
+                        <div onClick={() => setOpen(!open)} className="w-[50px] flex md:hidden items-center justify-center hover:bg-themeColor cursor-pointer hover:text-white text-2xl h-[50px] rounded-md shadow-theme bg-white">
                             {open ? <MdClose /> : <MdMenu />}
                         </div>
                     </div>

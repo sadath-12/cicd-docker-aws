@@ -6,8 +6,9 @@ import { useEffect } from 'react'
 import Link from 'next/link'
 import io from "socket.io-client";
 import Image from 'next/image'
+import { MdOutlineRefresh } from 'react-icons/md'
 
-const Main = ({ selected, active, setActive, setChats, user, chats }) => {
+const Main = ({ selected, getChats, active, setActive, setChats, user, chats }) => {
     const [initialized, setInitialized] = useState(false)
     const [incomingMsg, setIncomingMsg] = useState(null)
     const [acc, setAcc] = useState(null)
@@ -96,7 +97,7 @@ const Main = ({ selected, active, setActive, setChats, user, chats }) => {
                         </IconButton>
                     </Link>
                 </div>
-                <div className="flex gap-4 items-center">
+                <div className="flex gap-4 w-full items-center">
                     <div className='relative aspect-square w-12 h-12'>
                         <Image src='/images/user_default.png' alt='user_pic' fill />
                     </div>
@@ -107,6 +108,12 @@ const Main = ({ selected, active, setActive, setChats, user, chats }) => {
                             <div></div>
                         </small>
                     </div>
+                    <button onClick={getChats} className="ml-auto flex items-center gap-2 bg-gray-100 py-2 px-4 rounded-md border">
+                        <span className='text-sm'>Refresh</span>
+                        <MdOutlineRefresh className='text-xl' />
+
+                    </button>
+
                 </div>
             </div>
             <div className="flex justify-end flex-col flex-1 px-4 gap-2 py-6">

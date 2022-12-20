@@ -58,18 +58,21 @@ const Id = ({ id, user }) => {
         })()
     }, [])
 
+    const getChats = async () => {
+        if (selected && selected._id) {
+            const chatsRes = await axios.get('/api/chat/message?id=' + selected?._id,
+                {
+                    headers: {
+                        authorization: `Bearer ${user?.token}`,
+                    },
+                }
+            );
+            setChats(chatsRes.data.msgs)
+        }
+    }
     useEffect(() => {
         (async () => {
-            if (selected && selected._id) {
-                const chatsRes = await axios.get('/api/chat/message?id=' + selected?._id,
-                    {
-                        headers: {
-                            authorization: `Bearer ${user?.token}`,
-                        },
-                    }
-                );
-                setChats(chatsRes.data.msgs)
-            }
+            await getChats()
         })()
     }, [selected])
 
@@ -83,7 +86,7 @@ const Id = ({ id, user }) => {
                     <Sidebar active={active} setActive={setActive} setSelected={setSelected} conversations={conversations} selected={selected} id={id} user={user} />
                 </div>
                 <div className="col-span-2 border  chat_height overflow-y-scroll">
-                    <Main active={active} setActive={setActive} setChats={setChats} chats={chats} id={id} selected={selected} user={user} />
+                    <Main getChats={getChats} active={active} setActive={setActive} setChats={setChats} chats={chats} id={id} selected={selected} user={user} />
                 </div>
                 <div className="col-span-1 border hidden lg:flex border-l-0 rounded-r-xl chat_height">
                     <UserProfile selected={selected} id={id} user={user} />
