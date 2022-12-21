@@ -231,7 +231,7 @@ const Navbar = ({ user }) => {
                         </div>
                         {user && user?.email && user?.token &&
                             <Link href={`/profile/chat`} legacyBehavior>
-                                <a className='w-[50px] flex items-center justify-center hover:bg-themeColor cursor-pointer hover:text-white text-xl h-[50px] border rounded-md shadow-theme bg-white'>
+                                <a className='w-[50px] flex md:hidden items-center justify-center hover:bg-themeColor cursor-pointer hover:text-white text-xl h-[50px] border rounded-md shadow-theme bg-white'>
                                     <HiOutlineMail />
                                 </a>
                             </Link>

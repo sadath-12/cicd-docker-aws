@@ -120,7 +120,10 @@ const Home = ({ user }) => {
         <div className="w-full hidden md:block overflow-y-scroll pt-12 sticy inset-0 top-12 h-screen bg-white border-r max-w-sm">
           <Filters clearFilters={clearFilters} applyFilters={applyFilters} data={filterData} setData={setFilterData} />
         </div>
-        <MobFilter open={open} setOpen={setOpen} toggleDrawer={toggleDrawer} clearFilters={clearFilters} applyFilters={applyFilters} data={filterData} setData={setFilterData} />
+        <div className='md:hidden flex'>
+          <MobFilter open={open} setOpen={setOpen} toggleDrawer={toggleDrawer} clearFilters={clearFilters} applyFilters={applyFilters} data={filterData} setData={setFilterData} />
+
+        </div>
         <section id="posts" className='py-8 md:py-12  w-full flex-1 container lg:py-16 flex flex-col gap-8'>
           <div className="hidden md:flex flex-col gap-2 text-center items-center">
             <h2 className="text-2xl lg:text-3xl font-semibold">Popular Posts</h2>
