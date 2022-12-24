@@ -133,8 +133,8 @@ const Details = ({ website }) => {
     return (
         <div className='flex flex-col gap-6'>
             <div className="grid gap-4 grid-cols-2">
-                <Button text={`Do follow - ${website?.status === 'both' || 'do_follow' ? 'Yes' : 'No'}`} />
-                <Button text={`No follow - ${website?.status === 'both' || 'no_follow' ? 'Yes' : 'No'}`} />
+                <Button text={`Do follow - ${website?.status === 'both' ? 'Yes' : website?.status === 'do_follow' ? 'Yes' : 'No'}`} />
+                <Button text={`No follow - ${website?.status === 'both' ? 'Yes' : website?.status === 'no_follow' ? 'Yes' : 'No'}`} />
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3  2xl:grid-cols-3 gap-6">
                 <div className="flex border bg-white flex-col gap-2 p-2 rounded-xl">

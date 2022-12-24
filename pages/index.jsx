@@ -16,6 +16,7 @@ import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const drawerBleeding = 56;
 
@@ -110,6 +111,11 @@ const Home = ({ user }) => {
     })()
   }, [])
 
+  useEffect(() => {
+    console.log(user, 'user')
+  }, [user])
+  const matches = useMediaQuery('(min-width:768px)');
+
   return (
     <Layout user={user}>
       <Meta
@@ -120,9 +126,10 @@ const Home = ({ user }) => {
         <div className="w-full hidden md:block overflow-y-scroll pt-12 sticy inset-0 top-12 h-screen bg-white border-r max-w-sm">
           <Filters clearFilters={clearFilters} applyFilters={applyFilters} data={filterData} setData={setFilterData} />
         </div>
-        <div className='md:hidden flex'>
-          <MobFilter open={open} setOpen={setOpen} toggleDrawer={toggleDrawer} clearFilters={clearFilters} applyFilters={applyFilters} data={filterData} setData={setFilterData} />
-
+        <div className='md:hidden md:invisible visible flex'>
+          {!matches &&
+            <MobFilter open={open} setOpen={setOpen} toggleDrawer={toggleDrawer} clearFilters={clearFilters} applyFilters={applyFilters} data={filterData} setData={setFilterData} />
+          }
         </div>
         <section id="posts" className='py-8 md:py-12  w-full flex-1 container lg:py-16 flex flex-col gap-8'>
           <div className="hidden md:flex flex-col gap-2 text-center items-center">
@@ -195,6 +202,8 @@ const MobFilter = (props) => {
         <Filters clearFilters={clearFilters} applyFilters={applyFilters} data={data} setData={setData} />
       </SwipeableDrawer>
     </Root>
+
+
   );
 }
 
