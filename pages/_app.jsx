@@ -61,6 +61,8 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
     const isProtectedRoute =
       ctx.pathname === "/profile/dashboard" ||
       ctx.pathname === "/profile/chat/[id]" ||
+      ctx.pathname === "/requirements" ||
+      ctx.pathname === "/requirements/post" ||
       ctx.pathname === '/post-service'
     if (isProtectedRoute) {
       redirectUser(ctx, "/login");

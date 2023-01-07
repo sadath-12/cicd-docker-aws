@@ -11,7 +11,7 @@ const signToken = (user) => {
 
     process.env.JWT_SECRET,
     {
-      expiresIn: '30d',
+      expiresIn: '365d'
     }
   )
 }
@@ -26,8 +26,12 @@ const isAuth = async (req, res, next) => {
         res.status(401).send({ message: 'Token is not valid' })
       } else {
         const user = await User.findOne({ _id: decode._id })
-        req.user = user
-        next()
+        if (user) {
+          req.user = user
+          next()
+        } else {
+          res.status(401).send({ message: 'Token is not valid' })
+        }
       }
     })
   } else {
