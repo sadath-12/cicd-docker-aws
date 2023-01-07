@@ -26,8 +26,20 @@ handler.get(async (req, res) => {
                     .status(400)
                     .json({ message: `${req.query.id} - has no user` });
             }
+        } else if (req.query.email && req.query.mobile) {
             await db.connect()
-        } else {
+            const user = await User.findOne({ email: req.query.email, mobile: req.query.mobile.trim() })
+            if (user) {
+                return res
+                    .status(200)
+                    .json({ user });
+            } else {
+                return res
+                    .status(400)
+                    .json({ message: `${req.query.email} - has no user`, email: req.query.email, mobile: req.query.mobile });
+            }
+        }
+        else {
             return res
                 .status(400)
                 .json({ message: `Id was not provided!` });

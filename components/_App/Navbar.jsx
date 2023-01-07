@@ -108,7 +108,7 @@ const Navbar = ({ user }) => {
                     <div className="flex gap-4">
                         <nav className='hidden md:flex items-center'>
                             <ul className='flex items-center gap-10 pr-4'>
-                                <li>
+                                {/* <li>
                                     <Link href='/' legacyBehavior>
                                         <a className='link font-medium'>
                                             Home
@@ -121,11 +121,11 @@ const Navbar = ({ user }) => {
                                             About Us
                                         </a>
                                     </Link>
-                                </li>
+                                </li> */}
                                 <li>
                                     <Link href='/' legacyBehavior>
                                         <a className='link font-medium'>
-                                            Contact Us
+                                            Custom Requests
                                         </a>
                                     </Link>
                                 </li>
@@ -205,6 +205,13 @@ const Navbar = ({ user }) => {
 
                                                 <Link href='/post-service' legacyBehavior>
                                                     <a className='flex items-center gap-3'><BiAddToQueue className='text-xl' /> <span>{'Post a Site'}</span></a>
+                                                </Link>
+                                            </MenuItem>
+                                            <Divider />
+                                            <MenuItem >
+
+                                                <Link href='/admin/dashboard' legacyBehavior>
+                                                    <a className='flex items-center gap-3'><CgProfile className='text-xl' /> <span>{'Admin Dashboard'}</span></a>
                                                 </Link>
                                             </MenuItem>
                                             <Divider />

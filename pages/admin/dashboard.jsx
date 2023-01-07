@@ -4,10 +4,13 @@ import React, { useState } from 'react'
 import { useEffect } from 'react'
 import Layout from '../../components/_App/Layout'
 import PostCard from '../../components/common/PostCard'
+import Create from '../../components/Pages/Admin/Create'
+import Users from '../../components/Pages/Admin/Users'
 
 const dashboard = ({ user }) => {
     const router = useRouter()
     const [posts, setPosts] = useState([])
+    const [selected, setSelected] = useState('posts')
     const [loading, setLoading] = useState(true)
     const [admin, setAdmin] = useState(false)
     useEffect(() => {
@@ -28,7 +31,7 @@ const dashboard = ({ user }) => {
             }
 
         })()
-    }, [user])
+    }, [user, selected])
 
     const handleDelete = async (data) => {
         if (
@@ -53,15 +56,22 @@ const dashboard = ({ user }) => {
 
     return (
         <Layout user={user}>
-            <div className=" mt-8 flex flex-col gap-2 text-center items-center">
-                <h2 className="text-2xl lg:text-3xl font-semibold">All Posts</h2>
-                <div className="mx-auto w-full max-w-[8rem] rounded h-[6px] bg-themeColor"></div>
+            <div className="container bg-white border-y mt-2 flex items-center">
+                <a onClick={() => setSelected('posts')} className={`cursor-pointer text-base ${selected === 'posts' ? 'border-r bg-gray-100 ' : 'bg-white border-none'} p-6`}>Posts</a>
+                <a onClick={() => setSelected('users')} className={`cursor-pointer text-base ${selected === 'users' ? 'border-r bg-gray-100 ' : 'bg-white border-none'} p-6`}>Users</a>
+                <a onClick={() => setSelected('create')} className={`cursor-pointer text-base ${selected === 'create' ? 'border-r bg-gray-100 ' : 'bg-white border-none'} p-6`}>Create A Post</a>
             </div>
-            <div className="grid my-8 grid-cols-3 gap-6 container">
-                {posts.map(item => (
-                    <PostCard handleDelete={handleDelete} data={item} adminPage />
-                ))}
-            </div>
+            {selected === 'posts' ?
+                <div className="grid my-8 grid-cols-3 gap-6 container">
+                    {posts.map(item => (
+                        <PostCard handleDelete={handleDelete} data={item} adminPage />
+                    ))}
+                </div>
+                : selected === 'users' ?
+                    <Users user={user} />
+                    :
+                    <Create user={user} />
+            }
         </Layout>
     )
 }

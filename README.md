@@ -25,3 +25,12 @@ pnpm create next-app --example with-tailwindcss with-tailwindcss-app
 ```
 
 Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+1) Admin has access to Add post listing and assign to anyusername
+2) https://domain.com removing from title and adding just Domain.com
+3) while creating post site is taking too much time to get API data so we can just create the post listing first after that we will austomatically fetch api data to save yours wait.
+4) Removing email from sidebar where user details are shown on post listing, country, joined date is shown
+5) Post a requirement page, Where user adds his requirement like I need this thing and posts it.
+
+" I need this" etc
+
+And users can message him by seeing his text.

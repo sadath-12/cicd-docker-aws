@@ -45,7 +45,7 @@ const Id = ({ user, id }) => {
                     <div className="container md:!px-4 !px-0 flex flex-col lg:grid lg:grid-cols-6 gap-6">
                         <div className="lg:col-span-4 flex flex-col gap-6 shadow-theme rounded p-3 md:p-8 bg-white">
                             <div className="flex items-center justify-between">
-                                <h1 className="text-xl lg:text-2xl font-semibold">{website?.siteURL}</h1>
+                                <h1 className="text-xl lg:text-2xl font-semibold">{website?.siteURL?.replace("https://", "")}</h1>
                                 <span className='truncate'>
                                     {(new Date(website?.createdAt).toLocaleDateString("en-US", options))}
                                 </span>
@@ -90,15 +90,7 @@ const Id = ({ user, id }) => {
                                 <Divider />
                                 <div className="flex flex-col gap-4">
 
-                                    <div className="flex items-center justify-between">
-                                        <span>
-                                            Email
-                                        </span>
 
-                                        <span className='truncate'>
-                                            {websiteOwner?.email}
-                                        </span>
-                                    </div>
                                     <div className="flex items-center justify-between">
                                         <span>
                                             Country

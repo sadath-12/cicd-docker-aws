@@ -39,7 +39,7 @@ const login = ({ user }) => {
     }
 
     const router = useRouter()
-    
+
     useEffect(() => {
         if (state.success) {
             setTimeout(() => {
@@ -72,6 +72,11 @@ const login = ({ user }) => {
                                     Enter Password
                                 </label>
                                 <input onChange={handleChange} value={state.password} type="password" name="password" id="password" placeholder='Password' className='input' required />
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <Link href='/reset-password' legacyBehavior>
+                                    <a className='link'>Forgot Password?</a>
+                                </Link>
                             </div>
                             {state.error.show &&
                                 <Alert severity="error">{state.error.message}</Alert>

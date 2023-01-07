@@ -43,7 +43,7 @@ const Puller = styled(Box)(({ theme }) => ({
 
 const filter_initial = {
   category: 'all',
-  language: 'all',
+  language: 'all ',
   price_from: 0,
   price_to: 1000,
   year_to: 100,
@@ -138,7 +138,7 @@ const Home = ({ user }) => {
           </div>
           <div className="flex items-center justify-between md:hidden">
             <h2 className="text-2xl lg:text-3xl font-semibold">Popular Posts</h2>
-            <Button onClick={toggleDrawer(true)}>Filter</Button>
+            <Button onClick={toggleDrawer(true)}>Filter </Button>
           </div>
           {posts?.length > 0 || !loading ?
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -148,6 +148,8 @@ const Home = ({ user }) => {
             </div>
             :
             <LoaderComponent />}
+
+
 
         </section>
       </div>

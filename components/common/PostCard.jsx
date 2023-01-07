@@ -14,7 +14,7 @@ const PostCard = ({ data, adminPage, handleDelete, notPost }) => {
                 </div>
                 <div className="flex items-center justify-between">
                     <Link href={data?.siteURL} legacyBehavior target={'_blank'}>
-                        <a target={'_blank'} className="text-lg lg:text-xl truncate font-semibold">{data?.siteURL}</a>
+                        <a target={'_blank'} className="text-lg lg:text-xl truncate font-semibold">{data?.siteURL?.replace("https://", "")}</a>
                     </Link>
                     {!notPost && <div className="flex gap-1 pl-3 opacity-90 items-center">
                         <AiFillEye className='text-xl' />
@@ -33,7 +33,7 @@ const PostCard = ({ data, adminPage, handleDelete, notPost }) => {
                             <AiOutlineEdit />  <span>Edit</span>
                         </a>
                     </Link>
-                </div> :
+                </div>
             </div >
             :
             <div className='flex flex-col pb-4 rounded-md gap-4'>
@@ -43,7 +43,7 @@ const PostCard = ({ data, adminPage, handleDelete, notPost }) => {
                 </div>
                 <div className="flex items-center justify-between">
                     <Link href={data?.siteURL} legacyBehavior target={'_blank'}>
-                        <a target={'_blank'} className="text-lg lg:text-xl truncate font-semibold">{data?.siteURL}</a>
+                        <a target={'_blank'} className="text-lg lg:text-xl truncate font-semibold">{data?.siteURL?.replace("https://", "")}</a>
                     </Link>
                     {!notPost && <div className="flex gap-1 pl-3 opacity-90 items-center">
                         <AiFillEye className='text-xl' />

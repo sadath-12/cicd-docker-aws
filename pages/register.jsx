@@ -70,7 +70,7 @@ const register = ({ user }) => {
         e.preventDefault();
         setOtpState({ ...otpState, processing: true })
         try {
-            if (otpState.otp.length < 6) {
+            if (otpState?.otp?.length < 6) {
                 setOtpState({ ...otpState, error: { show: true, message: 'OTP Must be 6 digits' }, processing: false })
             } else {
                 const res = await axios.get(`/api/user/verifycode?mobile=${data.mobile}&code=${otpState.otp}`)
@@ -259,7 +259,7 @@ const register = ({ user }) => {
                             </button>
                             <p className="uppercase text-center font-semibold opacity-80">OR</p>
                             <button onClick={() => { setOtpState({ ...otpState, sent: false }), setState({ ...state, processing: false }) }} className='!w-full' >
-                                <Button gray fluid={true} text={'Change Mobile Number'} disabled={state.processing} />
+                                <Button gray fluid={true} text={'Change Mobile Number'} disabled={otpState.processing} />
                             </button>
                         </form>
                     </div>
