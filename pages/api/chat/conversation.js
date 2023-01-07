@@ -6,7 +6,12 @@ handler.use(isAuth)
 
 handler.post(async (req, res) => {
     try {
-        const conversationThere = await Conversation.findOne({ senderId: req.user._id, recieverId: req.body.seller._id })
+        const conversationThere = await Conversation.findOne(
+            {
+                $or: [{ senderId: req.user._id, recieverId: req.body.seller._id },
+                { senderId: req.body.seller._id, recieverId: req.user._id }]
+            }
+        )
         if (conversationThere) {
             if (req.body.relatedTo) {
                 if (req.body.relatedTo === conversationThere.relatedTo) {
@@ -16,7 +21,10 @@ handler.post(async (req, res) => {
                         convo: conversationThere,
                     });
                 } else {
-                    const updated = await Conversation.findOneAndUpdate({ senderId: req.user._id, recieverId: req.body.seller._id },
+                    const updated = await Conversation.findOneAndUpdate({
+                        $or: [{ senderId: req.user._id, recieverId: req.body.seller._id },
+                        { senderId: req.body.seller._id, recieverId: req.user._id }]
+                    },
                         {
                             $set: { relatedTo: req.body.relatedTo }
                         },
