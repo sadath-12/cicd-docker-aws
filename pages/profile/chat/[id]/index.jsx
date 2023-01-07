@@ -18,6 +18,7 @@ const Id = ({ id, user }) => {
     const [sellerSelected, setSellerSelected] = useRecoilState(sellerState)
     const [relatedToWebsite, setRelatedToWebsite] = useRecoilState(relatedState)
     const router = useRouter()
+    const { source } = router.query
 
     useEffect(() => {
         (async () => {
@@ -36,30 +37,51 @@ const Id = ({ id, user }) => {
                     senderId: user._id,
                     recieverId: sellerSelected?._id,
                     relatedTo: relatedToWebsite,
-                    user
+                    user,
+
                 }
-                const resselected = await axios.post('/api/chat/conversation', payload,
-                    {
-                        headers: {
-                            authorization: `Bearer ${user?.token}`,
-                        },
-                    }
-                )
-                const conversations = await axios.get('/api/chat/conversation',
-                    {
-                        headers: {
-                            authorization: `Bearer ${user?.token}`,
-                        },
-                    }
-                );
-                setConversations(conversations.data.convos)
-                setSelected(resselected?.data?.convo)
+                if (source && source.length) {
+                    const resselected = await axios.post('/api/chat/conversation', { ...payload, source },
+                        {
+                            headers: {
+                                authorization: `Bearer ${user?.token}`,
+                            },
+                        }
+                    )
+                    const conversations = await axios.get('/api/chat/conversation',
+                        {
+                            headers: {
+                                authorization: `Bearer ${user?.token}`,
+                            },
+                        }
+                    );
+                    setConversations(conversations.data.convos)
+                    setSelected(resselected?.data?.convo)
+                } else {
+                    const resselected = await axios.post('/api/chat/conversation', payload,
+                        {
+                            headers: {
+                                authorization: `Bearer ${user?.token}`,
+                            },
+                        }
+                    )
+                    const conversations = await axios.get('/api/chat/conversation',
+                        {
+                            headers: {
+                                authorization: `Bearer ${user?.token}`,
+                            },
+                        }
+                    );
+                    setConversations(conversations.data.convos)
+                    setSelected(resselected?.data?.convo)
+                }
+
             }
         })()
     }, [])
 
     const getChats = async () => {
-        if (selected && selected._id) {
+        if (selected && selected?._id) {
             const chatsRes = await axios.get('/api/chat/message?id=' + selected?._id,
                 {
                     headers: {

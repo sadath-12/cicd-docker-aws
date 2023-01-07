@@ -38,7 +38,7 @@ const dashboard = ({ user, id }) => {
                                 <Divider />
                                 <div className="flex flex-col gap-4">
 
-                                    <div className="flex items-center justify-between">
+                                    {/* <div className="flex items-center justify-between">
                                         <span>
                                             Email
                                         </span>
@@ -46,7 +46,7 @@ const dashboard = ({ user, id }) => {
                                         <span className='truncate'>
                                             {websiteOwner?.email}
                                         </span>
-                                    </div>
+                                    </div> */}
                                     <div className="flex items-center justify-between">
                                         <span>
                                             Country

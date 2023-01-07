@@ -77,9 +77,11 @@ const Id = ({ user, id }) => {
                                     </p>
                                 </div>
                                 <Divider />
-                                <button onClick={goToInbox}  >
-                                    <Button text='Contact User' fluid />
-                                </button>
+                                {websiteOwner._id === user._id ? '' :
+                                    <button onClick={goToInbox}  >
+                                        <Button text='Contact User' fluid />
+                                    </button>
+                                }
                             </div>
 
                             <div className="rounded bg-white shadow-theme w-full h-full flex flex-col gap-6 p-6">

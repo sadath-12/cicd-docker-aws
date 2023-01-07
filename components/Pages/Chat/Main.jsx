@@ -80,7 +80,7 @@ const Main = ({ selected, getChats, active, setActive, setChats, user, chats }) 
     }, [initialized])
 
     useEffect(() => {
-        incomingMsg && selected._id === incomingMsg.convoId && setChats(prev => [...prev, incomingMsg])
+        incomingMsg && selected?._id === incomingMsg.convoId && setChats(prev => [...prev, incomingMsg])
         console.log(incomingMsg)
     }, [incomingMsg, selected])
     useEffect(() => {

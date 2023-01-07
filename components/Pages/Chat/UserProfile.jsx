@@ -4,16 +4,15 @@ import PostCard from '../../common/PostCard'
 import Link from 'next/link';
 import React from 'react'
 
+
 const UserProfile = ({ user, selected }) => {
     var options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
 
     return (
         <div className="flex flex-col w-full">
-
-            {selected?.relatedTo &&
+            {selected?.source && selected?.source === 'requirements' ? '' : selected?.relatedTo &&
                 <div className="p-6 w-full">
                     <PostCard data={selected?.relatedTo} notPost />
-
                 </div>
             }
             <Divider />

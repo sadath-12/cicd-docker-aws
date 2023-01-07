@@ -42,13 +42,7 @@ const Navbar = ({ user }) => {
             <div style={{ boxShadow: ' -4px 8px 19px -3px rgb(168 182 218 / 32%)' }} className={`fixed md:hidden bg-white h-fit w-full z-50 ${!open ? 'top-[-70%]' : 'top-20'} border-t transition-all duration-500 black`}>
                 <nav className='flex flex-col w-full'>
                     <ul className='flex flex-col w-full'>
-                        <li >
-                            <Link href='/' legacyBehavior>
-                                <a className='p-6 hover:bg-gray-100 border-b block !min-w-full active:bg-gray-100 font-medium'>
-                                    Home
-                                </a>
-                            </Link>
-                        </li>
+                        {/* 
                         <li >
                             <Link href='/' legacyBehavior>
                                 <a className='p-6 hover:bg-gray-100 border-b block !min-w-full active:bg-gray-100 font-medium'>
@@ -60,6 +54,27 @@ const Navbar = ({ user }) => {
                             <Link href='/' legacyBehavior>
                                 <a className='p-6 hover:bg-gray-100 border-b block !min-w-full active:bg-gray-100 font-medium'>
                                     Contact Us
+                                </a>
+                            </Link>
+                        </li> */}
+                        <li >
+                            <Link href='/' legacyBehavior>
+                                <a className='p-6 hover:bg-gray-100 border-b block !min-w-full active:bg-gray-100 font-medium'>
+                                    Home
+                                </a>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href='/' legacyBehavior>
+                                <a className='link font-medium'>
+                                    Custom Requirements
+                                </a>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href='/requirements/post' legacyBehavior>
+                                <a className='link font-medium'>
+                                    Post a Requirement
                                 </a>
                             </Link>
                         </li>
@@ -108,13 +123,14 @@ const Navbar = ({ user }) => {
                     <div className="flex gap-4">
                         <nav className='hidden md:flex items-center'>
                             <ul className='flex items-center gap-10 pr-4'>
-                                {/* <li>
+                                <li>
                                     <Link href='/' legacyBehavior>
                                         <a className='link font-medium'>
                                             Home
                                         </a>
                                     </Link>
                                 </li>
+                                {/* 
                                 <li>
                                     <Link href='/' legacyBehavior>
                                         <a className='link font-medium'>
@@ -123,9 +139,16 @@ const Navbar = ({ user }) => {
                                     </Link>
                                 </li> */}
                                 <li>
-                                    <Link href='/' legacyBehavior>
+                                    <Link href='/requirements' legacyBehavior>
                                         <a className='link font-medium'>
-                                            Custom Requests
+                                            Requirements
+                                        </a>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href='/requirements/post' legacyBehavior>
+                                        <a className='link font-medium'>
+                                            Post a Requirement
                                         </a>
                                     </Link>
                                 </li>

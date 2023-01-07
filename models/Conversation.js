@@ -18,6 +18,9 @@ const convoSchema = new mongoose.Schema(
             type: Object,
             required: true
         },
+        source: {
+            type: String,
+        },
         relatedTo: {
             type: Object,
             required: true
