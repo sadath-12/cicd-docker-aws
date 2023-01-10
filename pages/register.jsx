@@ -70,7 +70,7 @@ const register = ({ user }) => {
         e.preventDefault();
         setOtpState({ ...otpState, processing: true })
         try {
-            if (otpState?.otp?.length < 6) {
+            if (otpState?.otp?.length < 6) { 
                 setOtpState({ ...otpState, error: { show: true, message: 'OTP Must be 6 digits' }, processing: false })
             } else {
                 const res = await axios.get(`/api/user/verifycode?mobile=${data.mobile}&code=${otpState.otp}`)
