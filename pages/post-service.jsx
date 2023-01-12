@@ -342,7 +342,7 @@ const PostService = ({ user }) => {
                         </div>
                         <div className="flex flex-col gap-2">
                             <label htmlFor="description">Description</label>
-                            <textarea required placeholder='Something about your site' className='input' name="description" id="description" onChange={handleChangeFormData} cols="30" rows="7"></textarea>
+                            <textarea minLength={150} required placeholder='Something about your site' className='input' name="description" id="description" onChange={handleChangeFormData} cols="30" rows="7"></textarea>
                         </div>
                         {verified &&
                             <>
