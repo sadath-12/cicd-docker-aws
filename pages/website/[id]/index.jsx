@@ -34,7 +34,7 @@ const Id = ({ user, id }) => {
     const goToInbox = () => {
         setRelated(website)
         setSeller(websiteOwner)
-        router.push(user && user.token ? `/profile/chat/${websiteOwner._id}` : '/login')
+        router.push(user && user?.token ? `/profile/chat/${websiteOwner._id}` : '/login')
     }
 
     return (
@@ -77,7 +77,7 @@ const Id = ({ user, id }) => {
                                     </p>
                                 </div>
                                 <Divider />
-                                {websiteOwner._id === user._id ? '' :
+                                {websiteOwner._id === user?._id ? '' :
                                     <button onClick={goToInbox}  >
                                         <Button text='Contact User' fluid />
                                     </button>

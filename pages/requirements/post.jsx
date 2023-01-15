@@ -92,7 +92,7 @@ const index = ({ user }) => {
                     </div>
                     <div className="flex flex-col gap-2">
                         <label htmlFor="description">Description</label>
-                        <textarea required placeholder='Something about your site' className='input' name="description" id="description" onChange={handleChange} cols="30" rows="7"></textarea>
+                        <textarea minLength={150} required placeholder='Something about your site' className='input' name="description" id="description" onChange={handleChange} cols="30" rows="7"></textarea>
                     </div>
                     <div className='relative grid py-3 gap-4 grid-cols-1 md:grid-cols-2 w-full'>
                         <div className={`${!state.processing ? "opacity-0 -z-10" : 'cursor-not-allowed opacity-70 z-20'} bg-white w-full absolute inset-0`}></div>

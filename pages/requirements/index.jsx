@@ -33,7 +33,7 @@ const index = ({ user }) => {
     const goToInbox = (req) => {
         setRelated(req)
         setSeller(req.user)
-        router.push(user && user.token ? `/profile/chat/${req.user._id}?source=requirements` : '/login')
+        router.push(user && user?.token ? `/profile/chat/${req.user?._id}?source=requirements` : '/login')
     }
 
     return (
@@ -51,7 +51,7 @@ const index = ({ user }) => {
                                     <Image src='/images/user_default.png' alt='user_pic' fill />
                                 </div>
                                 <div className="flex flex-col gap-1">
-                                    <h2 className="text-xl text-center font-semibold">{req.user.username}</h2>
+                                    <h2 className="text-xl text-center font-semibold">{req.user?.username}</h2>
                                 </div>
                                 <span className='ml-auto'>{new Date(req.createdAt).toLocaleDateString("en-IN")}</span>
                             </div>
@@ -72,7 +72,7 @@ const index = ({ user }) => {
                                         <span>Category: {req.category}</span>
                                     </div>
                                 </div>
-                                {req.user._id === user._id ? '' :
+                                {req.user?._id === user?._id ? '' :
                                     <button onClick={() => goToInbox(req)} >
                                         <Button fluid text='Contact User' />
                                     </button>

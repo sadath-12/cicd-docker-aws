@@ -70,6 +70,8 @@ const login = ({ user }) => {
                             <div className="flex flex-col gap-2">
                                 <label htmlFor="password">
                                     Enter Password
+
+
                                 </label>
                                 <input onChange={handleChange} value={state.password} type="password" name="password" id="password" placeholder='Password' className='input' required />
                             </div>
