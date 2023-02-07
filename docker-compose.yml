@@ -15,28 +15,4 @@ services:
       NEXT_PUBLIC_MONGO_URI: mongodb+srv://aman:12345@cluster0.tnh9cvk.mongodb.net/?retryWrites=true&w=majority
 
 
-# version: '3'
-# services:
-#   app:
-#     build: .
-#     ports:
-#       - 3000:3000
-#     environment:
-#       - NEXT_PUBLIC_SCREENSHOT_API_KEY: M090ATD-SWC43WF-M38X4KE-C778W5Q  
-#       - NEXT_PUBLIC_SEO_RANK_API_KEY: B4FBCAEDF8B46CBA118C1F15518B6EA2
-#       - NEXT_PUBLIC_MAJESTIC_API_KEY: JI84J7Y3JAZDH
 
-#     depends_on:
-#       - api
-#   api:
-#     build:
-#       context: .
-#       dockerfile: ./Dockerfile
-#     ports:
-#       - 3001:3000
-#     depends_on:
-#       - db
-#   db:
-#     image: mongo:4
-#     environment:
-#       NEXT_PUBLIC_MONGO_URI: mongodb+srv://aman:12345@cluster0.tnh9cvk.mongodb.net/?retryWrites=true&w=majority
